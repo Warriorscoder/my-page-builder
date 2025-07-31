@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { v4 as uuidv4 } from 'uuid';
 
 export interface LayoutComponent {
   id: string;
@@ -14,6 +13,12 @@ interface UndoableState {
   past: ComponentsState[];
   present: ComponentsState;
   future: ComponentsState[];
+}
+
+// Corrected: Define the payload type for the addComponent action
+interface AddComponentPayload {
+  id: string;
+  type: LayoutComponent['type'];
 }
 
 const initialState: UndoableState = {
@@ -31,10 +36,11 @@ const layoutSlice = createSlice({
       state.present = action.payload;
       state.future = [];
     },
-    addComponent: (state, action: PayloadAction<{ type: LayoutComponent['type'] }>) => {
+    // Corrected: The reducer now accepts the Contentful 'sys.id' in its payload
+    addComponent: (state, action: PayloadAction<AddComponentPayload>) => {
       state.past.push(state.present);
       state.present = {
-        components: [...state.present.components, { id: uuidv4(), type: action.payload.type }]
+        components: [...state.present.components, action.payload]
       };
       state.future = [];
     },

@@ -90,6 +90,29 @@ const App = () => {
     '2x2 Image Grid',
   ];
 
+  // Helper function to convert human-readable type to Contentful ID
+  const typeMap = {
+    'Hero Block': 'heroBlock',
+    'Two Column Row': 'twoColumnRow',
+    '2x2 Image Grid': 'x2ImageGrid',
+  };
+
+  // Asynchronous function to create a new Contentful entry and get its ID
+  const createAndAddComponent = async (type: LayoutComponent['type']) => {
+    try {
+      const entryId = typeMap[type];
+      const newEntry = await sdk.space.createEntry(entryId, {
+        fields: {
+          // You might need to set default values here if fields are required
+        }
+      });
+      // Dispatch the addComponent action with the new entry's sys.id
+      dispatch(addComponent({ id: newEntry.sys.id, type }));
+    } catch (error) {
+      console.error('Failed to create new entry:', error);
+    }
+  };
+
   React.useEffect(() => {
     if (!('entry' in sdk)) return;
     const initialValue = sdk.entry.fields.layoutConfig.getValue();
@@ -115,7 +138,8 @@ const App = () => {
 
     if (source.droppableId === 'sidebar') {
       const type = availableComponents[source.index];
-      dispatch(addComponent({ type }));
+      // Call the async function to create the entry and add it
+      createAndAddComponent(type);
     } else if (source.droppableId === 'canvas-droppable') {
       dispatch(reorderComponents({ startIndex: source.index, endIndex: destination.index }));
     }

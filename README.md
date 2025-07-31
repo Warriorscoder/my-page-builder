@@ -1,79 +1,62 @@
-This project was bootstrapped with [Create Contentful App](https://github.com/contentful/create-contentful-app).
+My App Builder
+This is a custom Contentful App that serves as a drag-and-drop page layout builder. It's designed to be used in conjunction with a frontend application to dynamically render pages based on a JSON configuration.
 
-## How to use
+The app's primary function is to enable editors to visually arrange components and save the component order and IDs in a JSON field.
 
-Execute create-contentful-app with npm, npx or yarn to bootstrap the example:
+🚀 Technical Stack
+Frontend: React, Redux, Contentful App SDK, Native CSS Modules
 
-```bash
-# npx
-npx create-contentful-app --typescript
+Tooling: create-contentful-app CLI, contentful-cli
 
-# npm
-npm init contentful-app -- --typescript
+📦 Setup Instructions
+Follow these steps to get the app running locally and installed in your Contentful space.
 
-# Yarn
-yarn create contentful-app --typescript
-```
+1. Clone the repository and install dependencies:
 
-## Available Scripts
+git clone <your-app-builder-repo-url>
+cd <your-app-builder-project-name>
+npm install
 
-In the project directory, you can run:
+2. Create the App Definition:
 
-#### `npm start`
+The create-contentful-app CLI will guide you through this process. It's recommended to do this after creating your content model.
 
-Creates or updates your app definition in Contentful, and runs the app in development mode.
-Open your app to view it in the browser.
+npm run create-app-definition
 
-The page will reload if you make edits.
-You will also see any lint errors in the console.
+3. Run the development server:
 
-#### `npm run build`
+This command will start a local server for your app and provide a URL that you can use to install it in Contentful.
 
-Builds the app for production to the `build` folder.
-It correctly bundles React in production mode and optimizes the build for the best performance.
+npm start
 
-The build is minified and the filenames include the hashes.
-Your app is ready to be deployed!
+4. Install the App in Contentful:
 
-#### `npm run upload`
+Once the dev server is running, navigate to your Contentful space.
 
-Uploads the build folder to contentful and creates a bundle that is automatically activated.
-The command guides you through the deployment process and asks for all required arguments.
-Read [here](https://www.contentful.com/developers/docs/extensibility/app-framework/create-contentful-app/#deploy-with-contentful) for more information about the deployment process.
+Go to Apps > Manage Custom Apps.
 
-#### `npm run upload-ci`
+Click "Install to space" and use the local URL provided by the npm start command.
 
-Similar to `npm run upload` it will upload your app to contentful and activate it. The only difference is  
-that with this command all required arguments are read from the environment variables, for example when you add
-the upload command to your CI pipeline.
+5. Assign the App to a Content Type:
 
-For this command to work, the following environment variables must be set:
+Go to Content model > Landing page.
 
-- `CONTENTFUL_ORG_ID` - The ID of your organization
-- `CONTENTFUL_APP_DEF_ID` - The ID of the app to which to add the bundle
-- `CONTENTFUL_ACCESS_TOKEN` - A personal [access token](https://www.contentful.com/developers/docs/references/content-management-api/#/reference/personal-access-tokens)
+Edit the layoutConfig field settings.
 
-## Libraries to use
+In the "Appearance" tab, select your custom app from the list of available editors.
 
-To make your app look and feel like Contentful use the following libraries:
+⚙️ App Configuration
+The app requires an installation parameter for the preview functionality (if implemented).
 
-- [Forma 36](https://f36.contentful.com/) – Contentful's design system
-- [Contentful Field Editors](https://www.contentful.com/developers/docs/extensibility/field-editors/) – Contentful's field editor React components
+previewUrl: The base URL of your frontend application's deployment (e.g., https://my-app.vercel.app). This is configured once during the app's installation.
 
-## Using the `contentful-management` SDK
+🤝 How to Use
+Open an entry of the Landing page content type.
 
-In the default create contentful app output, a contentful management client is
-passed into each location. This can be used to interact with Contentful's
-management API. For example
+Click the layoutConfig field to open the custom app in fullscreen mode.
 
-```js
-// Use the client
-cma.locale.getMany({}).then((locales) => console.log(locales));
-```
+Drag components from the sidebar onto the canvas.
 
-Visit the [`contentful-management` documentation](https://www.contentful.com/developers/docs/extensibility/app-framework/sdk/#using-the-contentful-management-library)
-to find out more.
+Reorder components by dragging them up or down on the canvas.
 
-## Learn More
-
-[Read more](https://www.contentful.com/developers/docs/extensibility/app-framework/create-contentful-app/) and check out the video on how to use the CLI.
+The layout will be automatically saved. To publish the changes, click the "Publish" button on the entry itself.

@@ -48,7 +48,7 @@ In the "Appearance" tab, select your custom app from the list of available edito
 ⚙️ App Configuration
 The app requires an installation parameter for the preview functionality (if implemented).
 
-previewUrl: The base URL of your frontend application's deployment (e.g., https://my-app.vercel.app). This is configured once during the app's installation.
+previewUrl: The base URL of your frontend application's deployment (https://my-page-builder-pntkhppaw-warriors-projects-7af56d98.vercel.app/). This is configured once during the app's installation.
 
 🤝 How to Use
 Open an entry of the Landing page content type.
